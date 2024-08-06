@@ -58,9 +58,14 @@ def main():
                 uv.run("pip", "install", *packages)
 
                 # Add the packages to the requirements.in file.
+                # Only add the packages that are not already in the file.
+                with open(project.path_to_requirements_in, "r") as f:
+                    lines = f.readlines()
+
                 with open(project.path_to_requirements_in, "a") as f:
                     for package in packages:
-                        f.write(f"{package}\n")
+                        if package.strip() not in lines:
+                            f.write(f"{package}\n")
 
                 # Update the lockfile.
                 uv.run(
