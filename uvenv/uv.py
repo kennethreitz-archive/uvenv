@@ -1,12 +1,13 @@
 """A subprocess wrapper for uv using delegator."""
 
 import os
-# import delegator
+
+from ._constants import UV
 
 class UV:
     """A wrapper for the uv command line tool."""
 
-    def __init__(self, executable="uv"):
+    def __init__(self, executable=UV):
         """Initialize the uv wrapper."""
         self.executable = executable
 
@@ -14,7 +15,6 @@ class UV:
         """Run a uv command."""
 
         cmd = f"{self.executable} {' '.join([str(a) for a in args])}"
-        # return delegator.run(cmd, block=True)
         os.system(cmd)
 
     def help(self, *args):
