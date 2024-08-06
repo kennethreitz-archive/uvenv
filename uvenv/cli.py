@@ -1,6 +1,8 @@
 """uvenv: A uv-based Python project management tool
 
 Usage:
+  uvenv info
+  uvenv version
   uvenv install [<packages>...]
   uvenv uninstall <packages>...
   uvenv lock
@@ -14,56 +16,52 @@ Options:
   --version     Show version.
 """
 
+import sys
 from docopt import docopt
+
+from .uv import UV
+from .project import Project
+from .__version__ import __version__
 
 
 def main():
+    args = docopt(__doc__, version=f'uvenv {__version__}')
+    uv = UV()
+    project = Project.from_cwd()
 
-    def install(packages):
-        if not packages:
-            print("Installing all dependencies from requirements.in or requirements.txt")
+    if args['info']:
+        print(f"uvenv {__version__}")
+        print(f"python {sys.version}")
+        uv.version()
+        print('--')
+
+        print(f"project: {project.path_to_requirements}")
+
+
+
+    if args['version']:
+        print(f"uvenv {__version__}")
+
+    if args['install']:
+        packages = args['<packages>']
+        if packages:
+            uv.pip_install(*packages)
         else:
-            print(f"Installing packages: {', '.join(packages)}")
+            uv.pip_install()
 
-    def uninstall(packages):
-        print(f"Uninstalling packages: {', '.join(packages)}")
+    elif args['uninstall']:
+        packages = args['<packages>']
+        uv.pip('uninstall', *packages)
 
-    def lock():
-        print("Generating PEP 751 compatible lock file")
+    elif args['lock']:
+        uv.pip_compile()
 
-    def run(command):
-        if not command:
-            print("No command provided to run")
-        else:
-            print(f"Running command: {' '.join(command)}")
+    elif args['run']:
+        command = args['<command>']
+        uv.run(*command)
 
-    def shell():
-        print("Spawning a new shell with the virtual environment activated")
+    elif args['shell']:
+        uv.run('shell')
 
-    def show_help():
-        print(__doc__)
-
-    def show_version():
-        print("uvenv version 1.0.0")
-
-    def main():
-        args = docopt(__doc__, version="1.0.0")
-
-        if args['install']:
-            install(args['<packages>'])
-        elif args['uninstall']:
-            uninstall(args['<packages>'])
-        elif args['lock']:
-            lock()
-        elif args['run']:
-            run(args['<command>'])
-        elif args['shell']:
-            shell()
-        elif args['--help']:
-            show_help()
-        elif args['--version']:
-            show_version()
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
