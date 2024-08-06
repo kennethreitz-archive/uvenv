@@ -59,7 +59,7 @@ def main():
             # If a package was provided, install it, and update the lockfile.
             if packages:
                 # Install the packages.
-                project.install(*packages, uv=uv)
+                project.install(uv, *packages)
 
             else:
                 # Install the packages from the lockfile.
@@ -70,7 +70,7 @@ def main():
             packages = args["<packages>"]
 
             # Uninstall the packages.
-            project.uninstall(*packages, uv=uv)
+            project.uninstall(uv, *packages)
 
             # Update the lockfile.
             project.lock(uv=uv)
