@@ -1,3 +1,5 @@
 docopt
 delegator
 uv
+-e .
+twine
