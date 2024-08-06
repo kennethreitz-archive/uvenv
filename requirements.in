@@ -1,3 +1,4 @@
 -e .
 twine
 setuptools
+tablib

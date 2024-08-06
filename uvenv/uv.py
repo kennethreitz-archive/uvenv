@@ -2,13 +2,13 @@
 
 import os
 
-from ._constants import UV
+from ._constants import UV_PATH
 
 
 class UV:
     """A wrapper for the uv command line tool."""
 
-    def __init__(self, executable=UV):
+    def __init__(self, executable=UV_PATH):
         """Initialize the uv wrapper."""
         self.executable = executable
 
