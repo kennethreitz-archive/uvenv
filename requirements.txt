@@ -9,13 +9,9 @@ certifi==2024.7.4
 charset-normalizer==3.3.2
     # via requests
 delegator==0.0.3
-    # via
-    #   -r requirements.in
-    #   uvenv
+    # via uvenv
 docopt==0.6.2
-    # via
-    #   -r requirements.in
-    #   uvenv
+    # via uvenv
 docutils==0.21.2
     # via readme-renderer
 idna==3.7
@@ -60,6 +56,8 @@ rfc3986==2.0.0
     # via twine
 rich==13.7.1
     # via twine
+tablib==3.6.1
+    # via -r requirements.in
 twine==5.1.1
     # via -r requirements.in
 urllib3==2.2.2
@@ -67,8 +65,6 @@ urllib3==2.2.2
     #   requests
     #   twine
 uv==0.2.33
-    # via
-    #   -r requirements.in
-    #   uvenv
+    # via uvenv
 zipp==3.19.2
     # via importlib-metadata

@@ -1,5 +1,3 @@
-docopt
-delegator
-uv
 -e .
+tablib
 twine
