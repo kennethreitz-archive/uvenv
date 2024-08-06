@@ -80,14 +80,14 @@ $ uvenv --help
 
 uvenv expects your project to have either a `requirements.txt` or `requirements.in` file in the project root. It will automatically discover the project root by searching for these files in the current directory and its parents.
 
-## Examples
+## Usage
 
 1. Start a new project:
    ```shell
-   mkdir myproject
-   cd myproject
-   echo "requests==2.26.0" > requirements.in
-   uvenv install
+   $ mkdir myproject
+   $ cd myproject
+   $ echo "requests==2.26.0" > requirements.in
+   $ uvenv install
    ```
 
 2. Add a new package:
@@ -105,7 +105,7 @@ uvenv expects your project to have either a `requirements.txt` or `requirements.
    $ uvenv lock
    ```
 
-**Upcoming features:**
+## Upcoming features
 
 5. Run a Python script:
    ```shell
