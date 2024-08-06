@@ -16,6 +16,7 @@ Options:
   --version     Show version.
 """
 
+import os
 import sys
 import logging
 from docopt import docopt
@@ -34,6 +35,9 @@ def main():
     args = docopt(__doc__, version=f"uvenv {__version__}")
     uv = UV()
     project = Project.from_cwd()
+
+    # Ensure the project has a virtual environment.
+    project.ensure_venv(uv=uv)
 
     try:
         # Display information about the project.
@@ -55,69 +59,42 @@ def main():
             # If a package was provided, install it, and update the lockfile.
             if packages:
                 # Install the packages.
-                uv.run("pip", "install", *packages)
-
-                # Add the packages to the requirements.in file.
-                # Only add the packages that are not already in the file.
-                with open(project.path_to_requirements_in, "r") as f:
-                    lines = f.readlines()
-
-                with open(project.path_to_requirements_in, "a") as f:
-                    for package in packages:
-                        if package.strip() not in lines:
-                            f.write(f"{package}\n")
-
-                # Update the lockfile.
-                uv.run(
-                    "pip",
-                    "compile",
-                    str(project.path_to_requirements_in),
-                    "-o",
-                    str(project.path_to_requirements_txt),
-                )
+                project.install(*packages, uv=uv)
 
             else:
                 # Install the packages from the lockfile.
-                uv.run("pip", "install", "-r", str(project.path_to_requirements_txt))
+                project.install_from_lockfile(uv=uv)
 
         # Uninstall packages.
         elif args["uninstall"]:
             packages = args["<packages>"]
 
             # Uninstall the packages.
-            uv.run("pip", "uninstall", *packages)
-
-            # Remove the packages from the requirements.in file.
-            with open(project.path_to_requirements_in, "r") as f:
-                lines = f.readlines()
-            with open(project.path_to_requirements_in, "w") as f:
-                for line in lines:
-                    if line.strip() not in packages:
-                        f.write(line)
+            project.uninstall(*packages, uv=uv)
 
             # Update the lockfile.
-            uv.run(
-                "pip",
-                "compile",
-                str(project.path_to_requirements_in),
-                "-o",
-                str(project.path_to_requirements_txt),
-            )
+            project.lock(uv=uv)
 
         # Update the lockfile.
         elif args["lock"]:
             # Update the lockfile.
-            uv.run(
-                "pip",
-                "compile",
-                "-o",
-                str(project.path_to_requirements_txt),
-                str(project.path_to_requirements_in),
-            )
+            project.lock(uv=uv)
 
         elif args["run"]:
-            print("Run command not implemented.")
-            sys.exit(1)
+            # Get the command to run
+            command = " ".join(args["<command>"])
+
+            # Construct the path to the virtual environment's Python interpreter
+            venv_python = os.path.join(project.path_to_venv, "bin", "python")
+
+            # Construct the full command to run in the virtual environment
+            full_command = f"{venv_python} -c 'import os, sys; os.execvp(sys.argv[1], sys.argv[1:])' {command}"
+
+            # Run the command using os.system
+            exit_code = os.system(full_command)
+
+            # Exit with the same code as the command
+            sys.exit(exit_code >> 8)
 
         elif args["shell"]:
             print("Shell command not implemented.")
