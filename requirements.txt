@@ -58,6 +58,8 @@ rich==13.7.1
     # via twine
 setuptools==72.1.0
     # via -r requirements.in
+tablib==3.6.1
+    # via -r requirements.in
 twine==5.1.1
     # via -r requirements.in
 urllib3==2.2.2

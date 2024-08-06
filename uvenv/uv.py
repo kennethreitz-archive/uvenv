@@ -12,6 +12,11 @@ class UV:
         """Initialize the uv wrapper."""
         self.executable = executable
 
+    @classmethod
+    def from_project(cls, project):
+        """Create a uv wrapper from a project."""
+        return cls(project.path_to_uv)
+
     def run(self, *args):
         """Run a uv command."""
 

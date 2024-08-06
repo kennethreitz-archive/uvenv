@@ -33,17 +33,16 @@ logger = logging.getLogger(__name__)
 
 def main():
     args = docopt(__doc__, version=f"uvenv {__version__}")
-    uv = UV()
     project = Project.from_cwd()
 
     # Ensure the project has a virtual environment.
-    project.ensure_venv(uv=uv)
+    project.ensure()
 
     try:
         # Display information about the project.
         if args["info"]:
             print(f"uvenv {__version__}")
-            uv.version()
+            # system_uv.version()
             print(f"project {project.path}")
             print(f"requirements {project.path_to_requirements_in}")
             print(f"lockfile {project.path_to_requirements_txt}")
@@ -59,26 +58,26 @@ def main():
             # If a package was provided, install it, and update the lockfile.
             if packages:
                 # Install the packages.
-                project.install(uv, *packages)
+                project.install(*packages)
 
             else:
                 # Install the packages from the lockfile.
-                project.install_from_lockfile(uv=uv)
+                project.install_from_lockfile()
 
         # Uninstall packages.
         elif args["uninstall"]:
             packages = args["<packages>"]
 
             # Uninstall the packages.
-            project.uninstall(uv, *packages)
+            project.uninstall(*packages)
 
             # Update the lockfile.
-            project.lock(uv=uv)
+            project.lock()
 
         # Update the lockfile.
         elif args["lock"]:
             # Update the lockfile.
-            project.lock(uv=uv)
+            project.lock()
 
         elif args["run"]:
             # Get the command to run

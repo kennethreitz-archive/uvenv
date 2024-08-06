@@ -1,3 +1,5 @@
+import os
+import sys
 from pathlib import Path
 
 from ._constants import (
@@ -5,6 +7,10 @@ from ._constants import (
     REQUIREMENTS_TXT,
     VENV_DIR,
 )
+
+from .uv import UV
+
+uv = UV()
 
 
 class Project:
@@ -23,16 +29,40 @@ class Project:
 
     def _valid_path(self, path):
         """Returns a path, if it exists."""
+
         if path.exists():
             return path
 
-    def ensure_venv(self, uv, *args):
+    def run(self, *command):
+        """Run a command in the project."""
+
+        venv_python = self.path_to_venv / "bin" / "python"
+        command = " ".join(command)
+
+        full_command = f"{venv_python} -c 'import os, sys; os.execvp(sys.argv[1], sys.argv[1:])' {command}"
+        exit_code = os.system(full_command)
+
+        return exit_code >> 8
+
+    def ensure(self):
+        """Ensure the project has a uv."""
+
+        self.ensure_venv()
+        self.ensure_uv()
+
+    def ensure_venv(self, *args):
         """Ensure the project has a virtual environment."""
 
         if not self.path_to_venv.exists():
             uv.run("venv", str(self.path_to_venv), *args)
 
-    def lock(self, uv):
+    def ensure_uv(self):
+        """Ensure the project has a uv."""
+
+        if not self.path_to_uv.exists():
+            self.run("uv", "pip", "install", "uv")
+
+    def lock(self):
         """Lock the project's dependencies."""
 
         uv.run(
@@ -43,11 +73,11 @@ class Project:
             str(self.path_to_requirements_txt),
         )
 
-    def install(self, uv, *packages):
+    def install(self, *packages):
         """Install the project's dependencies."""
 
         # Ensure the project has a virtual environment.
-        self.ensure_venv(uv=uv)
+        self.ensure_venv()
 
         # Install the packages.
         uv.run("pip", "install", *packages)
@@ -64,13 +94,13 @@ class Project:
                     f.write(f"{package}\n")
 
         # Update the lockfile.
-        self.lock(uv=uv)
+        self.lock()
 
-    def install_from_lockfile(self, uv):
+    def install_from_lockfile(self):
         """Install the project's dependencies from the lockfile."""
 
         # Ensure the project has a virtual environment.
-        self.ensure_venv(uv=uv)
+        self.ensure()
 
         # Install the packages from the lockfile.
         uv.run("pip", "install", "-r", str(self.path_to_requirements_txt))
@@ -89,7 +119,7 @@ class Project:
                 if line.strip() not in packages:
                     f.write(line)
 
-        self.lock(uv=uv)
+        self.lock()
 
     @property
     def path_to_requirements_in(self):
@@ -105,3 +135,8 @@ class Project:
     def path_to_venv(self):
         """The path to the project's virtual environment."""
         return self._valid_path(self.path / VENV_DIR)
+
+    @property
+    def path_to_uv(self):
+        """The path to the project's uv."""
+        return self._valid_path(self.path_to_venv / "bin" / "uv")
