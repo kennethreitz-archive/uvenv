@@ -16,6 +16,7 @@ Options:
   --version     Show version.
 """
 
+import os
 import sys
 from docopt import docopt
 
@@ -36,11 +37,10 @@ def main():
         project.path_to_requirements_txt,
         project.path_to_requirements_in,
     ]
-    install_command = ["pip", "pip", "install", *(args["<packages>"] or [])]
+    install_command = ["pip", "install", *(args["<packages>"] or [])]
     install_all_command = ["pip", "install", "-r", project.path_to_requirements_txt]
     uninstall_command = ["pip", "uninstall", *(args["<packages>"] or [])]
     uninstall_all_command = ["pip", "uninstall", "-r", project.path_to_requirements_txt]
-    run_command = ["run", *(args["<command>"] or [])]
 
     if args["info"]:
         print(f"uvenv {__version__}")
@@ -53,14 +53,17 @@ def main():
         print(f"uvenv {__version__}")
 
     if args["install"]:
-        if args["<packages>"]:
+        packages = args["<packages>"]
+
+        if packages:
             uv.run(*install_command)
         else:
             uv.run(*install_all_command)
 
-        # TODO: insert package into requirements.in
-        # with open(project.path_to_requirements_in, "a") as f:
-        # f.write(f"{packages}\n")
+        # Insert package into requirements.in
+        with open(project.path_to_requirements_in, "a") as f:
+            for package in packages:
+                f.write(f"{package}\n")
 
         # TODO: lock.
         uv.run(*lock_command)
@@ -73,12 +76,25 @@ def main():
         else:
             uv.run(*uninstall_all_command)
 
+        # Remove package from requirements.in
+        with open(project.path_to_requirements_in, "r") as f:
+            lines = f.readlines()
+
+        with open(project.path_to_requirements_in, "w") as f:
+            for line in lines:
+                if line.strip() not in packages:
+                    f.write(line)
+
     elif args["lock"]:
         uv.run(*lock_command)
 
     elif args["run"]:
         command = args["<command>"]
-        uv.run(*run_command)
+        if command:
+            os.system(command)
+        else:
+            print("No command provided.")
+            exit(1)
 
     elif args["shell"]:
         print("Shell command not implemented.")
