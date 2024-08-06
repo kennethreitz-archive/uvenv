@@ -14,13 +14,15 @@ Options:
   --version     Show version.
 """
 
-from docopt import docopt
 import subprocess
 import os
 import sys
 import platform
 
-__version__ = "0.3.0"
+from docopt import docopt
+
+
+__version__ = "0.1.0"
 
 class Project:
     def __init__(self):
