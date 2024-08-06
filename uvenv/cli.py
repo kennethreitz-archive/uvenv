@@ -33,8 +33,8 @@ def main():
         print(f"uvenv {__version__}")
         uv.version()
         print(f"project {project.path}")
-        print(f"requirements {project.path_to_requirements}")
-        print(f"lockfile {project.path_to_lockfile}")
+        print(f"requirements {project.path_to_requirements_in}")
+        print(f"lockfile {project.path_to_requirements_txt}")
 
     if args["version"]:
         print(f"uvenv {__version__}")

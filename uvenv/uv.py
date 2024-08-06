@@ -18,8 +18,12 @@ class UV:
         cmd = f"{self.executable} {' '.join([str(a) for a in args])}"
         os.system(cmd)
 
-    def run_announced(self, *args):
-        print(f"Running: {self.executable} {' '.join([str(a) for a in args])}")
-        self.run(*args)
+    def version(self):
+        """Get the uv version."""
+        return self.run("--version")
+
+    # def run_announced(self, *args):
+    #     print(f"Running: {self.executable} {' '.join([str(a) for a in args])}")
+    #     self.run(*args)
 
     # Add more methods for other uv commands as needed

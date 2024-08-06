@@ -21,23 +21,22 @@ class Project:
             current_path = current_path.parent
         raise Exception(f"No {search_fname} found")
 
+    def _valid_path(self, path):
+        """Returns a path, if it exists."""
+        if path.exists():
+            return path
+
     @property
     def path_to_requirements_in(self):
         """The path to the project's `requirements.in` file."""
-        path = self.path / REQUIREMENTS_IN
-        if path.exists():
-            return path
+        return self._valid_path(self.path / REQUIREMENTS_IN)
 
     @property
     def path_to_requirements_txt(self):
         """The path to the project's `requirements.txt` file."""
-        path = self.path / REQUIREMENTS_TXT
-        if path.exists():
-            return path
+        return self._valid_path(self.path / REQUIREMENTS_TXT)
 
     @property
     def path_to_venv(self):
         """The path to the project's virtual environment."""
-        path = self.path / VENV_DIR
-        if path.exists():
-            return path
+        return self._valid_path(self.path / VENV_DIR)
