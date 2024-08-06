@@ -8,7 +8,6 @@ class UV:
 
     def __init__(self, executable="uv"):
         """Initialize the uv wrapper."""
-
         self.executable = executable
 
     def run(self, *args):
@@ -17,6 +16,14 @@ class UV:
         cmd = f"{self.executable} {' '.join(args)}"
         # return delegator.run(cmd, block=True)
         os.system(cmd)
+
+    def help(self, *args):
+        """Show help for a uv command."""
+        return self.run("help", *args)
+
+    def version(self, *args):
+        """Show the uv version."""
+        return self.run("version", *args)
 
     def venv(self, *args):
         """Create a new virtual environment."""
