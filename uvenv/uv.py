@@ -35,15 +35,15 @@ class UV:
 
     def pip_compile(self, *args):
         """Generate a requirements.txt file."""
-        return self.run_pip("compile", *args)
+        return self.pip("compile", *args)
 
     def pip_sync(self, *args):
         """Sync the requirements.txt file."""
-        return self.run_pip("sync", *args)
+        return self.pip("sync", *args)
 
     def pip_install(self, *args):
         """Install a package."""
-        return self.run_pip("install", *args)
+        return self.pip("install", *args)
 
 
     # Add more methods for other uv commands as needed
