@@ -31,13 +31,10 @@ def main():
 
     if args['info']:
         print(f"uvenv {__version__}")
-        print(f"python {sys.version}")
         uv.version()
-        print('--')
-
-        print(f"project: {project.path_to_requirements}")
-
-
+        print(f"project {project.path}")
+        print(f"requirements {project.path_to_requirements}")
+        print(f"lockfile {project.path_to_lockfile}")
 
     if args['version']:
         print(f"uvenv {__version__}")
