@@ -29,6 +29,19 @@ def main():
     uv = UV()
     project = Project.from_cwd()
 
+    lock_command = [
+        "pip",
+        "compile",
+        "-o",
+        project.path_to_requirements_txt,
+        project.path_to_requirements_in,
+    ]
+    install_command = ["pip", "pip", "install", *(args["<packages>"] or [])]
+    install_all_command = ["pip", "install", "-r", project.path_to_requirements_txt]
+    uninstall_command = ["pip", "uninstall", *(args["<packages>"] or [])]
+    uninstall_all_command = ["pip", "uninstall", "-r", project.path_to_requirements_txt]
+    run_command = ["run", *(args["<command>"] or [])]
+
     if args["info"]:
         print(f"uvenv {__version__}")
         uv.version()
@@ -40,37 +53,36 @@ def main():
         print(f"uvenv {__version__}")
 
     if args["install"]:
-        packages = args["<packages>"]
-        if packages:
-            uv.run("pip", "install", *packages)
+        if args["<packages>"]:
+            uv.run(*install_command)
         else:
-            uv.run("pip", "install", "-r", project.path_to_requirements_txt)
+            uv.run(*install_all_command)
+
+        # TODO: insert package into requirements.in
+        # with open(project.path_to_requirements_in, "a") as f:
+        # f.write(f"{packages}\n")
 
         # TODO: lock.
+        uv.run(*lock_command)
 
     elif args["uninstall"]:
         packages = args["<packages>"]
 
         if packages:
-            uv.run_announced("pip", "uninstall", *packages)
+            uv.run(*uninstall_command)
         else:
-            uv.run_announced("pip", "uninstall", "-r", project.path_to_requirements_txt)
+            uv.run(*uninstall_all_command)
 
     elif args["lock"]:
-        uv.run(
-            "pip",
-            "compile",
-            "-o",
-            project.path_to_requirements_txt,
-            project.path_to_requirements_in,
-        )
+        uv.run(*lock_command)
 
     elif args["run"]:
         command = args["<command>"]
-        uv.run(*command)
+        uv.run(*run_command)
 
     elif args["shell"]:
-        uv.run("shell")
+        print("Shell command not implemented.")
+        exit(1)
 
 
 if __name__ == "__main__":
