@@ -21,16 +21,22 @@ class Project:
         raise Exception(f"No {search_fname} found")
 
     @property
-    def path_to_requirements(self):
-        """The path to the project's `requirements.txt` file."""
-        return self.path / "requirements.txt"
+    def path_to_requirements_in(self):
+        """The path to the project's `requirements.in` file."""
+        path = self.path / "requirements.in"
+        if path.exists():
+            return path
 
     @property
-    def path_to_lockfile(self):
-        """The path to the project's `requirements.lock` file."""
-        return self.path / "requirements.lock"
+    def path_to_requirements_txt(self):
+        """The path to the project's `requirements.txt` file."""
+        path = self.path / "requirements.txt"
+        if path.exists():
+            return path
 
     @property
     def path_to_venv(self):
         """The path to the project's virtual environment."""
-        return self.path / ".venv"
+        path = self.path / ".venv"
+        if path.exists():
+            return path
