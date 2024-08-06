@@ -5,6 +5,16 @@
 
 uvenv is a Python project management tool that leverages the speed of [uv](https://github.com/astral-sh/uv) for dependency management and virtual environment creation. It provides a simple interface for managing Python projects, inspired by tools like pipenv, but using requirements.txt and requirements.in files.
 
+## Philosophy
+
+- **Simplicity**: uvenv aims to provide a simple and intuitive interface for managing Python projects.
+- **Speed**: uvenv leverages the speed of uv for dependency management and virtual environment creation.
+- **Flexibility**: uvenv aims to be flexible and support a variety of project structures and workflows.
+- **Compatibility**: uvenv aims to be compatible with a variety of Python versions and platforms.
+- **Minimalism**: uvenv aims to be minimal and avoid unnecessary complexity.
+- **Power**: uvenv aims to provide powerful features for managing Python projects.
+- **Community**: uvenv aims to be community-driven and open-source.
+
 ## Features
 
 - Automatic project root discovery
