@@ -6,6 +6,15 @@
 
 - `requirements.in` — A file containing the packages to be installed.
 - `requirements.txt` — A lockfile containing the exact versions of the packages to be installed.
+- `.venv` — A directory containing the virtual environment.
+
+`uvenv` currently provides the following commands:
+
+- `uvenv install` — Install the packages in `requirements.in`.
+- `uvenv uninstall` — Uninstall the packages in `requirements.in`.
+- `uvenv lock` — Generate or update the lockfile in `requirements.txt`.
+
+Please note that `uvenv` is still under development and not all features are available. The goal is to provide a simple and intuitive interface for managing Python projects.
 
 ----------------
 
