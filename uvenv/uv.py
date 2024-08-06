@@ -1,7 +1,7 @@
 """A subprocess wrapper for uv using delegator."""
 
 import os
-import delegator
+# import delegator
 
 class UV:
     """A wrapper for the uv command line tool."""
@@ -35,10 +35,15 @@ class UV:
 
     def pip_compile(self, *args):
         """Generate a requirements.txt file."""
-        return self.run("pip", "compile", *args)
+        return self.run_pip("compile", *args)
 
     def pip_sync(self, *args):
         """Sync the requirements.txt file."""
-        return self.run("pip", "sync", *args)
+        return self.run_pip("sync", *args)
+
+    def pip_install(self, *args):
+        """Install a package."""
+        return self.run_pip("install", *args)
+
 
     # Add more methods for other uv commands as needed
