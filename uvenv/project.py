@@ -103,13 +103,13 @@ class Project:
         self.ensure()
 
         # Install the packages from the lockfile.
-        uv.run("pip", "install", "-r", str(self.path_to_requirements_txt))
+        self.run("uv", "pip", "install", "-r", str(self.path_to_requirements_txt))
 
     def uninstall(self, uv, *packages):
         """Uninstall the project's dependencies."""
 
         # Uninstall the packages.
-        uv.run("pip", "uninstall", *packages)
+        self.run("uv", "pip", "uninstall", *packages)
 
         # Remove the packages from the requirements.in file.
         with open(self.path_to_requirements_in, "r") as f:
