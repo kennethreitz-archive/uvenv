@@ -35,7 +35,7 @@
 To install `uvenv`, you need to have Python 3.6+ and uv installed. Then you can install uvenv using pip:
 
 ```shell
-$ pip install uvenv
+$ pip install uvenv-cli
 ```
 
 ## Usage
