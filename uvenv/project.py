@@ -1,6 +1,11 @@
 from pathlib import Path
 
-from ._constants import (REQUIREMENTS_IN, REQUIREMENTS_TXT, VENV_DIR,)
+from ._constants import (
+    REQUIREMENTS_IN,
+    REQUIREMENTS_TXT,
+    VENV_DIR,
+)
+
 
 class Project:
     def __init__(self, path):

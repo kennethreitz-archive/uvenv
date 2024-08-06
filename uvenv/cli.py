@@ -25,44 +25,47 @@ from .__version__ import __version__
 
 
 def main():
-    args = docopt(__doc__, version=f'uvenv {__version__}')
+    args = docopt(__doc__, version=f"uvenv {__version__}")
     uv = UV()
     project = Project.from_cwd()
 
-    if args['info']:
+    if args["info"]:
         print(f"uvenv {__version__}")
         uv.version()
         print(f"project {project.path}")
         print(f"requirements {project.path_to_requirements}")
         print(f"lockfile {project.path_to_lockfile}")
 
-    if args['version']:
+    if args["version"]:
         print(f"uvenv {__version__}")
 
-    if args['install']:
-        packages = args['<packages>']
+    if args["install"]:
+        packages = args["<packages>"]
         if packages:
             uv.pip_install(*packages)
         else:
-            uv.pip_install('-r', project.path_to_requirements_txt)
+            uv.pip_install("-r", project.path_to_requirements_txt)
 
-    elif args['uninstall']:
-        packages = args['<packages>']
+    elif args["uninstall"]:
+        packages = args["<packages>"]
 
         if packages:
-            uv.pip('uninstall', *packages)
+            uv.run_announced("pip", "uninstall", *packages)
         else:
-            uv.pip('uninstall', '-r', project.path_to_requirements_txt)
+            uv.run_announced("pip", "uninstall", "-r", project.path_to_requirements_txt)
 
-    elif args['lock']:
-        uv.pip_compile('-o', project.path_to_requirements_txt, project.path_to_requirements_in)
+    elif args["lock"]:
+        uv.pip_compile(
+            "-o", project.path_to_requirements_txt, project.path_to_requirements_in
+        )
 
-    elif args['run']:
-        command = args['<command>']
+    elif args["run"]:
+        command = args["<command>"]
         uv.run(*command)
 
-    elif args['shell']:
-        uv.run('shell')
+    elif args["shell"]:
+        uv.run("shell")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
