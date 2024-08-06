@@ -1,13 +1,25 @@
-import os
+from pathlib import Path
 
 class Project:
     def __init__(self, path):
-        self.path = path
+        self.path = Path(path).resolve()
 
+    @classmethod
+    def from_cwd(cls, *, search_depth=3, search_fname="requirements.txt"):
+        """Find the project root by searching up the directory tree for a file named `requirements.txt`."""
+        current_path = Path.cwd()
+        for _ in range(search_depth):
+            if (current_path / search_fname).exists():
+                return cls(current_path)
+            current_path = current_path.parent
+        raise Exception(f"No {search_fname} found")
 
-    def from_cwd(search_depth=3):
-        for i in range(search_depth):
-            if os.path.exists(os.path.join(os.getcwd(), "requirements.txt")):
-                return Project(os.getcwd())
-            os.chdir("..")
-        raise Exception("No requirements.txt found")
+    @property
+    def path_to_requirements(self):
+        """The path to the project's `requirements.txt` file."""
+        return self.path / "requirements.txt"
+
+    @property
+    def path_to_lockfile(self):
+        """The path to the project's `requirements.lock` file."""
+        return self.path / "requirements.lock"
