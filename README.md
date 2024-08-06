@@ -34,9 +34,9 @@
 
 To install `uvenv`, you need to have Python 3.6+ and uv installed. Then you can install uvenv using pip:
 
-``bash
+```shell
 $ pip install uvenv
-``
+```
 
 ## Usage
 
@@ -46,35 +46,35 @@ $ pip install uvenv
 
 Install dependencies or specific packages:
 
-``
-uvenv install
-uvenv install <package1> <package2>
-``
+```
+$ uvenv install
+$ uvenv install <package1> <package2>
+```
 
 ### Uninstall
 
 Remove specific packages:
 
-``
-uvenv uninstall <package1> <package2>
-``
+```
+$ uvenv uninstall <package1> <package2>
+```
 
 ### Lock
 
 Generate or update requirements.txt:
 
-``
-uvenv lock
-``
+```
+$ uvenv lock
+```
 
 
 ### Help
 
 Show help message:
 
-``
-uvenv --help
-``
+```
+$ uvenv --help
+```
 
 ## Project Structure
 
@@ -83,37 +83,39 @@ uvenv expects your project to have either a `requirements.txt` or `requirements.
 ## Examples
 
 1. Start a new project:
-   ``
+   ```shell
    mkdir myproject
    cd myproject
    echo "requests==2.26.0" > requirements.in
    uvenv install
-   ``
+   ```
 
 2. Add a new package:
-   ``
-   uvenv install numpy
-   ``
+   ```shell
+   $ uvenv install numpy
+   ```
 
 3. Remove a package:
-   ``
-   uvenv uninstall requests
-   ``
+   ```shell
+   $ uvenv uninstall requests
+   ```
 
 4. Update locked requirements:
-   ``
-   uvenv lock
-   ``
+   ```shell
+   $ uvenv lock
+   ```
+
+**Upcoming features:**
 
 5. Run a Python script:
-   ``
-   uvenv run python myscript.py
-   ``
+   ```shell
+   $ uvenv run python myscript.py
+   ```
 
 6. Start an interactive shell:
-   ``
-   uvenv shell
-   ``
+   ```shell
+   $ uvenv shell
+   ```
 
 ## Contributing
 
@@ -121,4 +123,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License.
+This project will be licensed under the MIT License.
