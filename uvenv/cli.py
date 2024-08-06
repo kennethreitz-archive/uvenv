@@ -115,7 +115,6 @@ def main():
             sys.exit(1)
 
         elif args["shell"]:
-            # This is a placeholder. You might want to use a library like `pty` to spawn an interactive shell
             print("Shell command not implemented.")
             sys.exit(1)
 

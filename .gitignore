@@ -1,3 +1,4 @@
 uvenv.egg-info
 build
 dist
+uvenv_cli.egg-info
