@@ -36,6 +36,7 @@ def main():
     project = Project.from_cwd()
 
     try:
+        # Display information about the project.
         if args["info"]:
             print(f"uvenv {__version__}")
             uv.version()
@@ -43,9 +44,11 @@ def main():
             print(f"requirements {project.path_to_requirements_in}")
             print(f"lockfile {project.path_to_requirements_txt}")
 
+        # Report the version of uvenv.
         elif args["version"]:
             print(f"uvenv {__version__}")
 
+        # Install packages.
         elif args["install"]:
             packages = args["<packages>"]
 
@@ -72,6 +75,7 @@ def main():
                 # Install the packages from the lockfile.
                 uv.run("pip", "install", "-r", str(project.path_to_requirements_txt))
 
+        # Uninstall packages.
         elif args["uninstall"]:
             packages = args["<packages>"]
 
@@ -95,6 +99,7 @@ def main():
                 str(project.path_to_requirements_txt),
             )
 
+        # Update the lockfile.
         elif args["lock"]:
             # Update the lockfile.
             uv.run(
@@ -105,14 +110,9 @@ def main():
                 str(project.path_to_requirements_in),
             )
 
-        # elif args["run"]:
-        #     command = args["<command>"]
-        #     if command:
-        #         # Run the command.
-        #         uv.run(*command)
-        #     else:
-        #         logger.error("No command provided.")
-        #         sys.exit(1)
+        elif args["run"]:
+            print("Run command not implemented.")
+            sys.exit(1)
 
         elif args["shell"]:
             # This is a placeholder. You might want to use a library like `pty` to spawn an interactive shell
