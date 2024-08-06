@@ -1,5 +1,11 @@
 from pathlib import Path
 
+# PATHS = {
+#     "requirements": "requirements.txt",
+#     "lockfile": "requirements.lock",
+#     "venv": ".venv",
+# }
+
 class Project:
     def __init__(self, path):
         self.path = Path(path).resolve()
@@ -23,3 +29,8 @@ class Project:
     def path_to_lockfile(self):
         """The path to the project's `requirements.lock` file."""
         return self.path / "requirements.lock"
+
+    @property
+    def path_to_venv(self):
+        """The path to the project's virtual environment."""
+        return self.path / ".venv"
