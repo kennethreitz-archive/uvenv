@@ -13,7 +13,7 @@ class UV:
     def run(self, *args):
         """Run a uv command."""
 
-        cmd = f"{self.executable} {' '.join(args)}"
+        cmd = f"{self.executable} {' '.join([str(a) for a in args])}"
         # return delegator.run(cmd, block=True)
         os.system(cmd)
 
