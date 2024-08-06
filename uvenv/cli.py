@@ -6,7 +6,7 @@ Usage:
   uvenv install [<packages>...]
   uvenv uninstall <packages>...
   uvenv lock
-  uvenv run [<command>...]
+  uvenv run [<command>]
   uvenv shell
   uvenv (-h | --help)
   uvenv --version
@@ -42,9 +42,11 @@ def main():
     if args["install"]:
         packages = args["<packages>"]
         if packages:
-            uv.pip_install(*packages)
+            uv.run("pip", "install", *packages)
         else:
-            uv.pip_install("-r", project.path_to_requirements_txt)
+            uv.run("pip", "install", "-r", project.path_to_requirements_txt)
+
+        # TODO: lock.
 
     elif args["uninstall"]:
         packages = args["<packages>"]
@@ -55,8 +57,12 @@ def main():
             uv.run_announced("pip", "uninstall", "-r", project.path_to_requirements_txt)
 
     elif args["lock"]:
-        uv.pip_compile(
-            "-o", project.path_to_requirements_txt, project.path_to_requirements_in
+        uv.run(
+            "pip",
+            "compile",
+            "-o",
+            project.path_to_requirements_txt,
+            project.path_to_requirements_in,
         )
 
     elif args["run"]:
