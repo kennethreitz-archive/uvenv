@@ -44,14 +44,18 @@ def main():
         if packages:
             uv.pip_install(*packages)
         else:
-            uv.pip_install()
+            uv.pip_install('-r', project.path_to_requirements_txt)
 
     elif args['uninstall']:
         packages = args['<packages>']
-        uv.pip('uninstall', *packages)
+
+        if packages:
+            uv.pip('uninstall', *packages)
+        else:
+            uv.pip('uninstall', '-r', project.path_to_requirements_txt)
 
     elif args['lock']:
-        uv.pip_compile()
+        uv.pip_compile('-o', project.path_to_requirements_txt, project.path_to_requirements_in)
 
     elif args['run']:
         command = args['<command>']
