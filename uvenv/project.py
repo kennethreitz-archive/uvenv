@@ -1,16 +1,15 @@
 import os
 import sys
 from pathlib import Path
+import shlex
 
-from ._constants import (
-    REQUIREMENTS_IN,
-    REQUIREMENTS_TXT,
-    VENV_DIR,
-)
+from ._constants import REQUIREMENTS_IN, REQUIREMENTS_TXT, VENV_DIR, PYTHON
 
-from .uv import UV
 
-uv = UV()
+def system_run(*command):
+    """Run a system command and return the exit code."""
+    exit_code = os.system(shlex.join(*command))
+    return exit_code >> 8
 
 
 class Project:
@@ -27,19 +26,16 @@ class Project:
             current_path = current_path.parent
         raise Exception(f"No {search_fname} found")
 
-    def _valid_path(self, path):
-        """Returns a path, if it exists."""
-
-        if path.exists():
-            return path
-
     def run(self, *command):
         """Run a command in the project."""
 
-        venv_python = self.path_to_venv / "bin" / "python"
-        command = " ".join(command)
+        python = self.path_to_venv / "bin" / "python"
+        if not python.exists():
+            python = PYTHON
 
-        full_command = f"{venv_python} -c 'import os, sys; os.execvp(sys.argv[1], sys.argv[1:])' {command}"
+        command = shlex.join(command)
+
+        full_command = f"{python} -c 'import os, sys; os.execvp(sys.argv[1], sys.argv[1:])' {command}"
         exit_code = os.system(full_command)
 
         return exit_code >> 8
@@ -54,7 +50,7 @@ class Project:
         """Ensure the project has a virtual environment."""
 
         if not self.path_to_venv.exists():
-            uv.run("venv", str(self.path_to_venv), *args)
+            self.run("uv", "venv", str(self.path_to_venv), "-p", PYTHON)
 
     def ensure_uv(self):
         """Ensure the project has a uv."""
@@ -65,7 +61,12 @@ class Project:
     def lock(self):
         """Lock the project's dependencies."""
 
-        uv.run(
+        # Ensure the project has a virtual environment.
+        self.ensure()
+
+        # Lock the dependencies.
+        self.run(
+            "uv",
             "pip",
             "compile",
             str(self.path_to_requirements_in),
@@ -77,10 +78,10 @@ class Project:
         """Install the project's dependencies."""
 
         # Ensure the project has a virtual environment.
-        self.ensure_venv()
+        self.ensure()
 
         # Install the packages.
-        uv.run("pip", "install", *packages)
+        self.run("uv", "pip", "install", *packages)
 
         # Add the packages to the requirements.in file.
         # Only add the packages that are not already in the file.
@@ -108,6 +109,9 @@ class Project:
     def uninstall(self, uv, *packages):
         """Uninstall the project's dependencies."""
 
+        # Ensure the project has a virtual environment.
+        self.ensure()
+
         # Uninstall the packages.
         self.run("uv", "pip", "uninstall", *packages)
 
@@ -124,19 +128,19 @@ class Project:
     @property
     def path_to_requirements_in(self):
         """The path to the project's `requirements.in` file."""
-        return self._valid_path(self.path / REQUIREMENTS_IN)
+        return self.path / REQUIREMENTS_IN
 
     @property
     def path_to_requirements_txt(self):
         """The path to the project's `requirements.txt` file."""
-        return self._valid_path(self.path / REQUIREMENTS_TXT)
+        return self.path / REQUIREMENTS_TXT
 
     @property
     def path_to_venv(self):
         """The path to the project's virtual environment."""
-        return self._valid_path(self.path / VENV_DIR)
+        return self.path / VENV_DIR
 
     @property
     def path_to_uv(self):
         """The path to the project's uv."""
-        return self._valid_path(self.path_to_venv / "bin" / "uv")
+        return self.path_to_venv / "bin" / "uv"

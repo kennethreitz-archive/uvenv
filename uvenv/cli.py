@@ -19,9 +19,9 @@ Options:
 import os
 import sys
 import logging
+import shlex
 from docopt import docopt
 
-from .uv import UV
 from .project import Project
 from .__version__ import __version__
 
@@ -81,7 +81,7 @@ def main():
 
         elif args["run"]:
             # Get the command to run
-            command = " ".join(args["<command>"])
+            command = shlex.join(*args["<command>"])
 
             # Construct the path to the virtual environment's Python interpreter
             venv_python = os.path.join(project.path_to_venv, "bin", "python")
