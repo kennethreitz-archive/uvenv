@@ -5,6 +5,15 @@ The `uvenv` command is a wrapper around the `uv` command. It provides a simple i
 
 **Note:** This is an active *work in progress*. Some features may not be fully implemented, and are subject to change.
 
+## Commands
+
+`uvenv` currently provides the following primary commands:
+
+- `uvenv install` — Install the packages in `requirements.in`.
+- `uvenv uninstall` — Uninstall the packages in `requirements.in`.
+- `uvenv lock` — Generate or update the lockfile in `requirements.txt`.
+
+
 ## Project Structure
 
 `uvenv` assumes the following project structure:
@@ -14,14 +23,6 @@ The `uvenv` command is a wrapper around the `uv` command. It provides a simple i
 - `.venv` — A directory containing the virtual environment.
 
 `uvenv` will automatically discover the project root by searching for these files in the current directory and its parents.
-
-## Commands
-
-`uvenv` currently provides the following primary commands:
-
-- `uvenv install` — Install the packages in `requirements.in`.
-- `uvenv uninstall` — Uninstall the packages in `requirements.in`.
-- `uvenv lock` — Generate or update the lockfile in `requirements.txt`.
 
 ## Environment Variables
 
