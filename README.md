@@ -1,4 +1,4 @@
-# `uvenv` - workflow tool for uv.
+# `uvenv` — workflow tool for uv
 
 
 The `uvenv` command is a wrapper around the `uv` command. It provides a simple interface for managing Python projects, inspired by tools like pipenv, but using `requirements.txt` and `requirements.in` files.
