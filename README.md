@@ -3,7 +3,7 @@
 
 The `uvenv` command is a wrapper around the `uv` command. It provides a simple interface for managing Python projects, inspired by tools like pipenv, but using `requirements.txt` and `requirements.in` files.
 
-**Note:** This project is a work in progress. Some features may not be fully implemented or may change in the future.
+**Note:** This is an active *work in progress*. Some features may not be fully implemented, and are subject to change.
 
 ## Project Structure
 
@@ -37,17 +37,13 @@ $ uvenv install
 
 ## Commands
 
-`uvenv` currently provides the following commands:
+`uvenv` currently provides the following primary commands:
 
 - `uvenv install` — Install the packages in `requirements.in`.
 - `uvenv uninstall` — Uninstall the packages in `requirements.in`.
 - `uvenv lock` — Generate or update the lockfile in `requirements.txt`.
 
-Please note that `uvenv` is still under development and not all features are available. The goal is to provide a simple and intuitive interface for managing Python projects.
-
 ----------------
-
-`uvenv` is a Python project management tool that leverages the speed of [`uv`](https://github.com/astral-sh/uv) for dependency management and virtual environment creation. It provides a simple interface for managing Python projects, inspired by tools like pipenv, but using `requirements.txt` and `requirements.in` files.
 
 ## Philosophy
 
