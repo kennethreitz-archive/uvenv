@@ -15,6 +15,14 @@ The `uvenv` command is a wrapper around the `uv` command. It provides a simple i
 
 `uvenv` will automatically discover the project root by searching for these files in the current directory and its parents.
 
+## Commands
+
+`uvenv` currently provides the following primary commands:
+
+- `uvenv install` — Install the packages in `requirements.in`.
+- `uvenv uninstall` — Uninstall the packages in `requirements.in`.
+- `uvenv lock` — Generate or update the lockfile in `requirements.txt`.
+
 ## Environment Variables
 
 `uvenv` allows you to customize the locations of key files and directories using environment variables:
@@ -35,14 +43,6 @@ $ export UVENV_VENV_DIR=~/.venvs/myproject
 $ uvenv install
 ```
 
-## Commands
-
-`uvenv` currently provides the following primary commands:
-
-- `uvenv install` — Install the packages in `requirements.in`.
-- `uvenv uninstall` — Uninstall the packages in `requirements.in`.
-- `uvenv lock` — Generate or update the lockfile in `requirements.txt`.
-
 ----------------
 
 ## Philosophy
@@ -55,14 +55,6 @@ $ uvenv install
 - **Power**: `uvenv` aims to provide powerful features for managing Python projects.
 - **Community**: `uvenv` aims to be community-driven and open-source.
 
-## Features
-
-- Automatic project root discovery
-- Virtual environment management
-- Dependency installation and uninstallation
-- Requirements locking
-- Command running within the virtual environment
-- Interactive shell with activated virtual environment
 
 ## Installation
 
