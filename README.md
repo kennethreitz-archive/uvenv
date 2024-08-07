@@ -44,18 +44,6 @@ $ export UVENV_VENV_DIR=~/.venvs/myproject
 $ uvenv install
 ```
 
-----------------
-
-## Philosophy
-
-- **Simplicity**: `uvenv` aims to provide a simple and intuitive interface for managing Python projects.
-- **Speed**: `uvenv` leverages the speed of uv for dependency management and virtual environment creation.
-- **Flexibility**: `uvenv` aims to be flexible and support a variety of project structures and workflows.
-- **Compatibility**: `uvenv` aims to be compatible with a variety of Python versions and platforms.
-- **Minimalism**: `uvenv` aims to be minimal and avoid unnecessary complexity.
-- **Power**: `uvenv` aims to provide powerful features for managing Python projects.
-- **Community**: `uvenv` aims to be community-driven and open-source.
-
 
 ## Installation
 
@@ -63,44 +51,6 @@ To install `uvenv`, you need to have Python 3.6+ and uv installed. Then you can 
 
 ```shell
 $ pip install uvenv-cli
-```
-
-## Usage
-
-`uvenv` provides the following commands:
-
-### Install
-
-Install dependencies or specific packages:
-
-```
-$ uvenv install
-$ uvenv install <package1> <package2>
-```
-
-### Uninstall
-
-Remove specific packages:
-
-```
-$ uvenv uninstall <package1> <package2>
-```
-
-### Lock
-
-Generate or update requirements.txt:
-
-```
-$ uvenv lock
-```
-
-
-### Help
-
-Show help message:
-
-```
-$ uvenv --help
 ```
 
 ## Project Structure
