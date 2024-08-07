@@ -1,12 +1,41 @@
 # `uvenv` - workflow tool for uv.
 
+
+The `uvenv` command is a wrapper around the `uv` command. It provides a simple interface for managing Python projects, inspired by tools like pipenv, but using `requirements.txt` and `requirements.in` files.
+
 **Note:** This project is a work in progress. Some features may not be fully implemented or may change in the future.
+
+## Project Structure
 
 `uvenv` assumes the following project structure:
 
 - `requirements.in` — A file containing the packages to be installed.
 - `requirements.txt` — A lockfile containing the exact versions of the packages to be installed.
 - `.venv` — A directory containing the virtual environment.
+
+`uvenv` will automatically discover the project root by searching for these files in the current directory and its parents.
+
+## Environment Variables
+
+`uvenv` allows you to customize the locations of key files and directories using environment variables:
+
+- `UVENV_REQUIREMENTS_IN`: Specifies the location of the requirements input file (default: `requirements.in`)
+- `UVENV_REQUIREMENTS_TXT`: Specifies the location of the requirements lockfile (default: `requirements.txt`)
+- `UVENV_VENV_DIR`: Specifies the directory for the virtual environment (default: `.venv`)
+- `UVENV_UV`: Specifies the path to the `uv` executable (default: `uv`)
+- `UVENV_PYTHON`: Specifies the Python interpreter to use (default: `python`)
+
+For example, to use a different name for your requirements file:
+
+```shell
+$ export UVENV_REQUIREMENTS_IN=requirements-dev.in
+$ export UVENV_REQUIREMENTS_TXT=requirements-dev.txt
+$ export UVENV_VENV_DIR=~/.venvs/myproject
+
+$ uvenv install
+```
+
+## Commands
 
 `uvenv` currently provides the following commands:
 
