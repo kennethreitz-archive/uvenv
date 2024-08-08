@@ -39,7 +39,6 @@ Customize locations with environment variables:
 - `UVENV_REQUIREMENTS_TXT`: Path to the lockfile (default: `requirements.txt`)
 - `UVENV_VENV_DIR`: Directory for the virtual environment (default: `.venv`)
 - `UVENV_UV`: Path to the `uv` executable (default: `uv`)
-- `UVENV_PYTHON`: Python interpreter to use (default: `python`)
 
 Example:
 ```sh
