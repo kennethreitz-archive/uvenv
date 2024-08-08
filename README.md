@@ -10,6 +10,16 @@
 - **Flexibility**: Customize file and directory locations using environment variables.
 - **Ease of Use**: Thin wrapper around `$ uv pip compile` and `$ uv pip install` commands.
 
+### Lock Dependencies
+
+`$ uvenv lock` generates a lockfile (`requirements.txt`) with exact versions of packages listed in `requirements.in`. This ensures that the same versions are installed across different environments.
+
+### Install Dependencies
+
+`$ uvenv install` installs packages from the lockfile (`requirements.txt`) into a virtual environment. This creates a reproducible environment with the exact versions of packages.
+
+That's it! Pretty simple.
+
 ## Installation
 
 To install `uvenv`, ensure you have Python 3.6+ and `uv` installed. Then, install `uvenv` using pip:
