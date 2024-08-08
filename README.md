@@ -6,10 +6,6 @@
 
 ## Features
 
-- **Simple**: `uvenv` is a lightweight tool with only two commands.
-- **Fast**: `uvenv` is built on `uv`, a fast and minimal package manager.
-- **Reproducible**: `uvenv` generates a lockfile with exact versions of packages.
-
 A virtual environment will be created (with `uv`), if you don't already have one. This ensures that packages are installed in isolation and do not interfere with the system Python.
 
 ### Lock Dependencies
