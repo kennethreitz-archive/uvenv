@@ -11,7 +11,6 @@ def system_run(*command):
     exit_code = os.system(shlex.join(*command))
     return exit_code >> 8
 
-
 class Project:
     def __init__(self, path):
         self.path = Path(path).resolve()
@@ -25,6 +24,7 @@ class Project:
                 return cls(current_path)
             current_path = current_path.parent
         raise Exception(f"No {search_fname} found")
+
 
     def run(self, *command):
         """Run a command in the project."""
@@ -44,7 +44,6 @@ class Project:
         """Ensure the project has a uv."""
 
         self.ensure_venv()
-        self.ensure_uv()
 
     def ensure_venv(self, *args):
         """Ensure the project has a virtual environment."""
