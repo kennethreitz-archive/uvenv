@@ -1,9 +1,21 @@
 # `uvenv` — workflow tool for uv
 
+This repository contains the command `uvenv`, a workflow tool for uv. The goal of
+`uvenv` is to provide much of the functionality of tools like `pipenv`, but using
+`requirements.txt` and `requirements.in` files along with a `$ uv pip compile` step.
 
-The `uvenv` command is a wrapper around the `uv` command. It provides a simple interface for managing Python projects, inspired by tools like pipenv, but using `requirements.txt` and `requirements.in` files.
+This may or may not be a good idea. We'll see.
 
-**Note:** This is an active *work in progress*. Some features may not be fully implemented, and are subject to change.
+## Status
+
+- The `requirements.in` file is a "source of truth" for the project's dependencies.
+  - I am considering adding support for other intake formats, such as `pyproject.toml` and `Pipfile`.
+- The "point of interface" for `uvenv` is the resulting `requirements.txt` file.
+  - Other tools can use this file to install the project's dependencies, however desired.
+- The `uvenv` command is a thin wrapper around `uv pip compile` and `pip install`.
+- The `uvenv` command is not yet feature-complete.
+  - It currently only supports `install`, `uninstall`, and `lock` commands.
+  - It does not yet support `run` or `shell` commands.
 
 ## Commands
 
