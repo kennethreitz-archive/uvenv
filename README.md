@@ -23,9 +23,9 @@ This may or may not be a good idea. We'll see.
 
 `uvenv` currently provides the following primary commands:
 
-- `uvenv install` — Install the packages in `requirements.in`.
-- `uvenv uninstall` — Uninstall the packages in `requirements.in`.
-- `uvenv lock` — Generate or update the lockfile in `requirements.txt`.
+- `$ uvenv install` — Install the packages in `requirements.in`.
+- `$ uvenv uninstall` — Uninstall the packages in `requirements.in`.
+- `$ uvenv lock` — Generate or update the lockfile in `requirements.txt`.
 
 
 ## Project Structure
