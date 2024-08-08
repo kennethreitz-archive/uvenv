@@ -2,6 +2,8 @@
 
 `uvenv` is a workflow tool for `uv`, inspired by Pipenv, designed to manage Python project dependencies using `requirements.txt` and `requirements.in` files. It aims to simplify dependency management and environment setup.
 
+**Note**: this software is in early development and may not be suitable for production use.
+
 ## Features
 
 - **Dependency Management**: Install packages listed in `requirements.in` and generate a lockfile (`requirements.txt`) for consistent environments.
