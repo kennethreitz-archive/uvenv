@@ -1,8 +1,6 @@
 """uvenv: A uv-based Python project management tool
 
 Usage:
-  uvenv info
-  uvenv version
   uvenv install
   uvenv lock
   uvenv (-h | --help)
@@ -41,12 +39,8 @@ def main():
         project.ensure_requirements_txt()
         project.ensure_venv()
 
-        # Report the version of uvenv.
-        if args["version"]:
-            print(f"uvenv {__version__}")
-
         # Install packages.
-        elif args["install"]:
+        if args["install"]:
             project.install_from_lockfile()
 
         # Update the lockfile.
