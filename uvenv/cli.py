@@ -37,7 +37,7 @@ def main():
     project = Project.from_cwd()
 
     # Ensure the project has a virtual environment.
-    project.ensure()
+    project.ensure_venv()
 
     try:
         # Display information about the project.
