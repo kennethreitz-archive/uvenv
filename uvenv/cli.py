@@ -37,17 +37,8 @@ def main():
 
 
     try:
-        # Display information about the project.
-        if args["info"]:
-            print(f"uvenv {__version__}")
-
-            print(f"python {project.path_to_python}")
-            print(f"venv {project.path_to_venv}")
-            print(f"project {project.path}")
-            print(f"requirements {project.path_to_requirements_in}")
-            print(f"lockfile {project.path_to_requirements_txt}")
-
         # Ensure the project has a virtual environment.
+        project.ensure_requirements_txt()
         project.ensure_venv()
 
         # Report the version of uvenv.
@@ -63,21 +54,6 @@ def main():
             # Update the lockfile.
             project.lock()
 
-        elif args["run"]:
-            # Get the command to run
-            command = shlex.join(*args["<command>"])
-
-            # Construct the path to the virtual environment's Python interpreter
-            venv_python = os.path.join(project.path_to_venv, "bin", "python")
-
-            # Construct the full command to run in the virtual environment
-            full_command = f"{venv_python} -c 'import os, sys; os.execvp(sys.argv[1], sys.argv[1:])' {command}"
-
-            # Run the command using os.system
-            exit_code = os.system(full_command)
-
-            # Exit with the same code as the command
-            sys.exit(exit_code >> 8)
 
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
