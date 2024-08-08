@@ -20,6 +20,7 @@ import os
 import sys
 import logging
 import shlex
+
 from docopt import docopt
 
 from .project import Project
