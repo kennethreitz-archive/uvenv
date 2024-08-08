@@ -34,22 +34,24 @@ def main():
     args = docopt(__doc__, version=f"uvenv {__version__}")
     project = Project.from_cwd()
 
-    # Ensure the project has a virtual environment.
-    project.ensure_venv()
+
 
     try:
         # Display information about the project.
         if args["info"]:
             print(f"uvenv {__version__}")
-            # system_uv.version()
+
             print(f"python {project.path_to_python}")
             print(f"venv {project.path_to_venv}")
             print(f"project {project.path}")
             print(f"requirements {project.path_to_requirements_in}")
             print(f"lockfile {project.path_to_requirements_txt}")
 
+        # Ensure the project has a virtual environment.
+        project.ensure_venv()
+
         # Report the version of uvenv.
-        elif args["version"]:
+        if args["version"]:
             print(f"uvenv {__version__}")
 
         # Install packages.

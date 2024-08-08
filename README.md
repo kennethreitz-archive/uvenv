@@ -28,31 +28,9 @@ pip install uvenv-cli
 
 ## Commands
 
-- `$ uvenv install`: Install packages from `requirements.in`.
-- `$ uvenv uninstall`: Uninstall packages listed in `requirements.in`.
 - `$ uvenv lock`: Generate or update the lockfile (`requirements.txt`).
+- `$ uvenv install`: Install packages from the lockfile (`requirements.txt`).
 
-## Usage
-
-1. **Start a New Project**:
-    ```sh
-    mkdir myproject
-    cd myproject
-    echo "requests==2.26.0" > requirements.in
-    uvenv install
-    ```
-2. **Add a New Package**:
-    ```sh
-    uvenv install numpy
-    ```
-3. **Remove a Package**:
-    ```sh
-    uvenv uninstall requests
-    ```
-4. **Update Locked Requirements**:
-    ```sh
-    uvenv lock
-    ```
 
 ## Environment Variables
 
@@ -70,11 +48,6 @@ export UVENV_REQUIREMENTS_TXT=requirements-dev.txt
 export UVENV_VENV_DIR=~/.venvs/myproject
 uvenv install
 ```
-
-## Upcoming Features
-
-- `uvenv run`: Run a Python script.
-- `uvenv shell`: Start an interactive shell.
 
 ## Contributing
 
