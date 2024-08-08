@@ -40,28 +40,17 @@ class Project:
 
         return exit_code >> 8
 
-    def ensure(self):
-        """Ensure the project has a uv."""
-
-        self.ensure_venv()
-
     def ensure_venv(self, *args):
         """Ensure the project has a virtual environment."""
 
         if not self.path_to_venv.exists():
             self.run("uv", "venv", str(self.path_to_venv), "-p", PYTHON)
 
-    def ensure_uv(self):
-        """Ensure the project has a uv."""
-
-        if not self.path_to_uv.exists():
-            self.run("uv", "pip", "install", "uv")
-
     def lock(self):
         """Lock the project's dependencies."""
 
         # Ensure the project has a virtual environment.
-        self.ensure()
+        self.ensure_venv()
 
         # Lock the dependencies.
         self.run(
@@ -77,7 +66,7 @@ class Project:
         """Install the project's dependencies."""
 
         # Ensure the project has a virtual environment.
-        self.ensure()
+        self.ensure_venv()
 
         # Install the packages.
         self.run("uv", "pip", "install", *packages)
@@ -100,7 +89,7 @@ class Project:
         """Install the project's dependencies from the lockfile."""
 
         # Ensure the project has a virtual environment.
-        self.ensure()
+        self.ensure_venv()
 
         # Install the packages from the lockfile.
         self.run("uv", "pip", "install", "-r", str(self.path_to_requirements_txt))
@@ -109,7 +98,7 @@ class Project:
         """Uninstall the project's dependencies."""
 
         # Ensure the project has a virtual environment.
-        self.ensure()
+        self.ensure_venv()
 
         # Uninstall the packages.
         self.run("uv", "pip", "uninstall", *packages)
