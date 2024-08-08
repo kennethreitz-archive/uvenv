@@ -3,11 +3,8 @@
 Usage:
   uvenv info
   uvenv version
-  uvenv install [<packages>...]
-  uvenv uninstall <packages>...
+  uvenv install
   uvenv lock
-  uvenv run [<command>...]
-  uvenv shell
   uvenv (-h | --help)
   uvenv --version
 
@@ -21,6 +18,7 @@ import sys
 import logging
 import shlex
 
+import shellingham
 from docopt import docopt
 
 from .project import Project
@@ -44,6 +42,8 @@ def main():
         if args["info"]:
             print(f"uvenv {__version__}")
             # system_uv.version()
+            print(f"python {project.path_to_python}")
+            print(f"venv {project.path_to_venv}")
             print(f"project {project.path}")
             print(f"requirements {project.path_to_requirements_in}")
             print(f"lockfile {project.path_to_requirements_txt}")
@@ -54,26 +54,7 @@ def main():
 
         # Install packages.
         elif args["install"]:
-            packages = args["<packages>"]
-
-            # If a package was provided, install it, and update the lockfile.
-            if packages:
-                # Install the packages.
-                project.install(*packages)
-
-            else:
-                # Install the packages from the lockfile.
-                project.install_from_lockfile()
-
-        # Uninstall packages.
-        elif args["uninstall"]:
-            packages = args["<packages>"]
-
-            # Uninstall the packages.
-            project.uninstall(*packages)
-
-            # Update the lockfile.
-            project.lock()
+            project.install_from_lockfile()
 
         # Update the lockfile.
         elif args["lock"]:
@@ -95,10 +76,6 @@ def main():
 
             # Exit with the same code as the command
             sys.exit(exit_code >> 8)
-
-        elif args["shell"]:
-            print("Shell command not implemented.")
-            sys.exit(1)
 
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")

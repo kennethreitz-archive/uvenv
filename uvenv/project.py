@@ -62,29 +62,6 @@ class Project:
             str(self.path_to_requirements_txt),
         )
 
-    def install(self, *packages):
-        """Install the project's dependencies."""
-
-        # Ensure the project has a virtual environment.
-        self.ensure_venv()
-
-        # Install the packages.
-        self.run("uv", "pip", "install", *packages)
-
-        # Add the packages to the requirements.in file.
-        # Only add the packages that are not already in the file.
-        with open(self.path_to_requirements_in, "r") as f:
-            lines = f.readlines()
-
-        # Add the packages to the requirements.in file.
-        with open(self.path_to_requirements_in, "a") as f:
-            for package in packages:
-                if package.strip() not in lines:
-                    f.write(f"{package}\n")
-
-        # Update the lockfile.
-        self.lock()
-
     def install_from_lockfile(self):
         """Install the project's dependencies from the lockfile."""
 
@@ -132,3 +109,8 @@ class Project:
     def path_to_uv(self):
         """The path to the project's uv."""
         return self.path_to_venv / "bin" / "uv"
+
+    @property
+    def path_to_python(self):
+        """The path to the project's Python executable."""
+        return self.path_to_venv / "bin" / "python"
