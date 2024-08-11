@@ -25,7 +25,7 @@ REQUIRED = [
     "docopt",
     # "delegator",
     "uv",
-    "shellingham"
+    "pluggy",
     # 'requests', 'maya', 'records',
 ]
 

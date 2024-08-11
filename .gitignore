@@ -3,3 +3,4 @@ build
 dist
 uvenv_cli.egg-info
 .vscode
+__pycache__
