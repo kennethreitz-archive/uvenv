@@ -11,12 +11,15 @@ def system_run(*command):
     exit_code = os.system(shlex.join(command))
     return exit_code >> 8
 
+
 class Project:
     def __init__(self, path):
         self.path = Path(path).resolve()
 
     @classmethod
-    def from_cwd(cls, *, search_depth=3, search_fnames=[REQUIREMENTS_TXT, REQUIREMENTS_IN]):
+    def from_cwd(
+        cls, *, search_depth=3, search_fnames=[REQUIREMENTS_TXT, REQUIREMENTS_IN]
+    ):
         """Find the project root by searching up the directory tree for a file named `requirements.txt`."""
         current_path = Path.cwd()
 
@@ -32,7 +35,7 @@ class Project:
         """Ensure the project has a virtual environment."""
 
         if not self.path_to_venv.exists():
-           system_run("uv", "venv", str(self.path_to_venv))
+            system_run("uv", "venv", str(self.path_to_venv))
 
     def ensure_requirements_txt(self):
         """Ensure the project has a `requirements.txt` file."""

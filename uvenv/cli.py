@@ -11,16 +11,14 @@ Options:
   --version     Show version.
 """
 
-import os
 import sys
 import logging
-import shlex
 
-import shellingham
 from docopt import docopt
 
 from .project import Project
 from .__version__ import __version__
+
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -31,8 +29,6 @@ logger = logging.getLogger(__name__)
 def main():
     args = docopt(__doc__, version=f"uvenv {__version__}")
     project = Project.from_cwd()
-
-
 
     try:
         # Ensure the project has a virtual environment.
@@ -47,7 +43,6 @@ def main():
         elif args["lock"]:
             # Update the lockfile.
             project.lock()
-
 
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
